@@ -51,6 +51,7 @@ app.post("/movies/", async (request, response) => {
         VALUES
         (${directorId},'${movieName}','${leadActor}');`;
     const movie = await db.run(addMovieQuery);
+    directorId = dbResponse.lastId;
     response.send("Movie Successfully Added");
 
 });
@@ -58,7 +59,7 @@ app.post("/movies/", async (request, response) => {
 //3 Get Movie based on Movie Id
 app.get("/movies/:movieId", async (request, response) => {
     const getMovieQurey = `SELECT * FORM movie WHERE movie_id = ${movieId};`;
-    const moviesArray = await db.all(getMovieQurey);
+    const moviesArray = await db.get(getMovieQurey);
     response.send(moviesArray);
 });
 
